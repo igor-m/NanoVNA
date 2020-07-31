@@ -997,16 +997,16 @@ menu_brightness(int item, uint8_t data)
 static const char s1_file_header[] =
   "!File created by NanoVNA\r\n"\
   "# Hz S RI R 50\r\n";
-
+// #IMO %10d to %u
 static const char s1_file_param[] =
-  "%10d % f % f\r\n";
+  "%u % f % f\r\n";
 
 static const char s2_file_header[] =
   "!File created by NanoVNA\r\n"\
   "# Hz S RI R 50\r\n";
-
+// #IMO %10d to %u
 static const char s2_file_param[] =
-  "%10d % f % f % f % f 0 0 0 0\r\n";
+  "%u % f % f % f % f 0 0 0 0\r\n";
 
 static UI_FUNCTION_CALLBACK(menu_sdcard_cb)
 {
@@ -1040,7 +1040,7 @@ static UI_FUNCTION_CALLBACK(menu_sdcard_cb)
 //      total_size+=size;
       // Write all points data
       for (i = 0; i < sweep_points && res == FR_OK; i++) {
-        size = plot_printf(buf, 128, s1_file_param, frequencies[i], measured[0][i][0], measured[0][i][1]);
+        size = plot_printf(buf, 128, s1_file_param, (unsigned)frequencies[i], measured[0][i][0], measured[0][i][1]);
 //        total_size+=size;
         res = f_write(fs_file, buf, size, &size);
       }
@@ -1052,7 +1052,7 @@ static UI_FUNCTION_CALLBACK(menu_sdcard_cb)
 //      total_size+=size;
       // Write all points data
       for (i = 0; i < sweep_points && res == FR_OK; i++) {
-        size = plot_printf(buf, 128, s2_file_param, frequencies[i], measured[0][i][0], measured[0][i][1], measured[1][i][0], measured[1][i][1]);
+        size = plot_printf(buf, 128, s2_file_param, (unsigned)frequencies[i], measured[0][i][0], measured[0][i][1], measured[1][i][0], measured[1][i][1]);
 //        total_size+=size;
         res = f_write(fs_file, buf, size, &size);
       }
